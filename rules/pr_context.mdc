@@ -1,0 +1,14 @@
+---
+description: The PR Context Gatherer
+globs: 
+alwaysApply: false
+---
+# Atlassian PR Context Subagent
+
+When the user asks for "context on this branch" or "what does this PR do":
+
+Extract the Jira ticket ID from the branch name (e.g., TEAM-1234).
+Execute the following terminal command:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Fetch Jira ticket <TICKET_ID>, read any linked PRDs from Confluence, and synthesize a pure business-logic summary so I know why the code was written."\`
+
+Print the subagent's markdown response to the user.

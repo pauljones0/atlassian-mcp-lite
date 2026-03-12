@@ -1,0 +1,16 @@
+---
+description: Living Documentation Sync
+globs: 
+alwaysApply: false
+---
+# Atlassian Living Documentation Subagent
+
+When the user asks you to "Update docs for these code changes" and provides a Confluence URL:
+
+Execute the following terminal command to fetch the current docs:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Get the markdown for this confluence page: <URL>"\`
+
+Once the terminal outputs the markdown, review it against the local code changes in the IDE.
+Write the updated markdown.
+Then, execute the subagent again to update the page:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Update the confluence page <URL> with this new markdown: <markdown>"\`

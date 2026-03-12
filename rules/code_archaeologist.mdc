@@ -1,0 +1,14 @@
+---
+description: Code Archaeologist
+globs: 
+alwaysApply: false
+---
+# Atlassian Code Archaeologist Subagent
+
+When the user highlights a block of legacy code and invokes the Code Archaeologist skill:
+
+First, within Cursor natively, run `git blame` and `git log` on the highlighted snippet to extract the Jira ticket ID from the commit message.
+Then, execute the following terminal command:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Fetch Jira ticket <TICKET_ID>, and fetch a maximum of 3 linked Parent Epics or Blocking tickets. Synthesize The Origin, The Git Context, The Why, The Blast Radius, and Historical Quirks."\`
+
+Print the subagent's archaeology report to the user.

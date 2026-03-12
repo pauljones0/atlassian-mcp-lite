@@ -1,0 +1,15 @@
+---
+description: Automated Triage & Test Runner
+globs: 
+alwaysApply: false
+---
+# Atlassian Triage Runner Subagent
+
+When the user asks you to "Find open bugs for me", "triage bugs", or "find a bug to fix":
+
+Execute the following terminal command:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Find open bugs assigned to me or in the backlog"\`
+
+Read the terminal output. If a bug is returned, YOU (the main Cursor agent) can then attempt to run tests locally in the workspace to reproduce the bug.
+Once you have test output, pass it back to the subagent to comment:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Add a comment to ticket <TICKET_ID> with this test output: <output> and move it to In Progress."\`

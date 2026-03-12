@@ -1,0 +1,13 @@
+---
+description: Automated Backlog Assassin
+globs: 
+alwaysApply: false
+---
+# Atlassian Backlog Assassin Subagent
+
+When the user asks you to "Clean up the backlog for [Feature]":
+
+Execute the following terminal command:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Find all open technical debt or requests mentioning <FEATURE>. Drop a comment 'Obsoleted by recent PR', bulk-transition them to Closed, and return the kill list."\`
+
+Print the subagent's kill list to the user.

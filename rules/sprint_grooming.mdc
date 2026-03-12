@@ -1,0 +1,13 @@
+---
+description: Zero-Friction Sprint Grooming
+globs: 
+alwaysApply: false
+---
+# Atlassian Sprint Grooming Subagent
+
+When the user asks you to "Break down this epic", "groom this epic", or "split this jira ticket":
+
+Execute the following terminal command via the local subagent:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Break down this epic: <EPIC_ID or prompt>"\`
+
+Wait for the subagent to print the markdown response to the terminal, and then display that response to the user.

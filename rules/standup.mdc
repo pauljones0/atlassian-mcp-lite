@@ -1,0 +1,13 @@
+---
+description: Weekly Standup Summarizer
+globs: 
+alwaysApply: false
+---
+# Atlassian Standup Subagent
+
+When the user asks you to "Draft my Friday update", "write my standup", or "what did I do this week":
+
+Execute the following terminal command:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Fetch tickets assigned to me that were updated in the last 7 days. Synthesize what was moved to Done versus what is In Progress, and return a clean, bulleted markdown summary."\`
+
+Print the subagent's markdown response to the user.

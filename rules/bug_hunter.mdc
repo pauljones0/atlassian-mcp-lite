@@ -1,0 +1,13 @@
+---
+description: Duplicate Bug Hunter & Linker
+globs: 
+alwaysApply: false
+---
+# Atlassian Duplicate Bug Subagent
+
+When the user asks you to "Triage this new bug" and provides an error stack trace:
+
+Execute the following terminal command and pass the stack trace:
+\`uv run /home/$USER/atlassian-subagent/local_gemini_agent.py "Run a semantic search across the Jira backlog for this stack trace: <STACK_TRACE>. If a match is found, link the tickets, leave a comment, transition the new bug to closed, and report back that it was a duplicate."\`
+
+Print the subagent's output to the user.
