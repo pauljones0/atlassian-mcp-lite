@@ -22,6 +22,7 @@ if not MCP_SERVER_URL:
 # Initialize Gemini client
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+
 async def run_subagent_loop(prompt: str):
     """The CLI ReAct loop that interacts with the backend Atlassian MCP server."""
     try:
@@ -43,11 +44,13 @@ async def run_subagent_loop(prompt: str):
 
                 # Initialize a chat session
                 chat = client.chats.create(
-                    model='gemini-3.1-flash-lite-preview',
+                    model="gemini-3.1-flash-lite-preview",
                     config=genai.types.GenerateContentConfig(
-                        tools=[{"function_declarations": mcp_tools}] if mcp_tools else None,
+                        tools=[{"function_declarations": mcp_tools}]
+                        if mcp_tools
+                        else None,
                         temperature=0,
-                    )
+                    ),
                 )
 
                 response = chat.send_message(prompt)
@@ -58,23 +61,30 @@ async def run_subagent_loop(prompt: str):
 
                     tool_responses = []
                     for fn_call in response.function_calls:
-                        print(f"[*] Reasoning: Invoking tool '{fn_call.name}'", file=sys.stderr)
+                        print(
+                            f"[*] Reasoning: Invoking tool '{fn_call.name}'",
+                            file=sys.stderr,
+                        )
                         try:
                             # Re-map tool name/args correctly
-                            tool_result = await session.call_tool(fn_call.name, arguments=fn_call.args)
-                            
+                            tool_result = await session.call_tool(
+                                fn_call.name, arguments=fn_call.args
+                            )
+
                             tool_responses.append(
                                 genai.types.Part.from_function_response(
                                     name=fn_call.name,
-                                    response={"result": tool_result.content}
+                                    response={"result": tool_result.content},
                                 )
                             )
                         except Exception as e:
-                            print(f"[!] Tool Error ('{fn_call.name}'): {e}", file=sys.stderr)
+                            print(
+                                f"[!] Tool Error ('{fn_call.name}'): {e}",
+                                file=sys.stderr,
+                            )
                             tool_responses.append(
                                 genai.types.Part.from_function_response(
-                                    name=fn_call.name,
-                                    response={"error": str(e)}
+                                    name=fn_call.name, response={"error": str(e)}
                                 )
                             )
 
@@ -89,9 +99,10 @@ async def run_subagent_loop(prompt: str):
         print(f"Subagent System Error: {e}", file=sys.stderr)
         sys.exit(1)
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: uv run local_gemini_agent.py \"<prompt>\"")
+        print('Usage: uv run local_gemini_agent.py "<prompt>"')
         sys.exit(1)
-        
+
     asyncio.run(run_subagent_loop(sys.argv[1]))
