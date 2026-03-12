@@ -31,14 +31,15 @@ async def run_subagent_loop(prompt: str):
 
                 # Get available tools from backend MCP
                 tools_response = await session.list_tools()
-                
-                mcp_tools = []
-                for tool in tools_response.tools:
-                    mcp_tools.append({
+
+                mcp_tools = [
+                    {
                         "name": tool.name,
                         "description": tool.description,
-                        "parameters": tool.inputSchema
-                    })
+                        "parameters": tool.inputSchema,
+                    }
+                    for tool in tools_response.tools
+                ]
 
                 # Initialize a chat session
                 chat = client.chats.create(
