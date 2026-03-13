@@ -11,18 +11,6 @@ Offloads Atlassian (Jira/Confluence) tool schemas from Cursor's active context w
 1. **Configure Secrets**
    Fill out the `.env` file with your API tokens for both Atlassian and Gemini.
 
-## Data Flow & Configuration
-
-Unlike standard MCP setups, this "Lite" version does **not** use a `mcp.json` file for Cursor registration. 
-
-1. **Credentials:** The `mcp-atlassian` server reads Jira/Confluence credentials directly from your `.env` file.
-2. **Background Service:** The `install.sh` script sets up a `systemd` user service that loads `.env` and runs the server on a local port (default: 8000).
-3. **Subagent:** The `local_gemini_agent.py` script acts as the bridge. It connects to the server via HTTP/SSE, fetches the tool schemas, and executes them via a separate Gemini-powered ReAct loop.
-4. **Context Purity:** This architecture ensures that hundreds of Atlassian tool schemas never "bloat" Cursor's primary context window, saving tokens and improving performance.
-
-> [!IMPORTANT]
-> **Windows/WSL Compatibility:** This project is designed for Linux environments (or WSL on Windows) due to its dependency on `systemd` and `bash`.
-
 2. **Install**
    Run the installation script to configure the systemd background service and install the Python requirements:
    ```bash
@@ -38,3 +26,15 @@ Unlike standard MCP setups, this "Lite" version does **not** use a `mcp.json` fi
    - *"Break down this epic: TEAM-123"*
    - *"Draft my Friday update"* 
    - *"Find open bugs for me"*
+
+## Data Flow & Configuration
+
+Unlike standard MCP setups, this "Lite" version does **not** use a `mcp.json` file for Cursor registration. 
+
+1. **Credentials:** The `mcp-atlassian` server reads Jira/Confluence credentials directly from your `.env` file.
+2. **Background Service:** The `install.sh` script sets up a `systemd` user service that loads `.env` and runs the server on a local port (default: 8000).
+3. **Subagent:** The `local_gemini_agent.py` script acts as the bridge. It connects to the server via HTTP/SSE, fetches the tool schemas, and executes them via a separate Gemini-powered ReAct loop.
+4. **Context Purity:** This architecture ensures that hundreds of Atlassian tool schemas never "bloat" Cursor's primary context window, saving tokens and improving performance.
+
+> [!IMPORTANT]
+> **Windows/WSL Compatibility:** This project is designed for Linux environments (or WSL on Windows) due to its dependency on `systemd` and `bash`.
