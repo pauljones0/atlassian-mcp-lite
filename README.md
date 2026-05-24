@@ -1,3 +1,5 @@
+#Note: archived. This is superceded by the omni repo. It does more, better
+
 # Atlassian MCP Lite for Cursor
 
 Offloads Atlassian (Jira/Confluence) tool schemas from Cursor's active context window into a lightweight, local Gemini subagent. 
